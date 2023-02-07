@@ -5,6 +5,11 @@ export default async function Contracts() {
 	const contracts = await getContractsByFunctions();
 
 	return (
-		<ContractBars contracts={contracts} />
+		(
+			<>
+				<ContractBars contracts={contracts} />
+				<pre>{JSON.stringify(contracts, undefined, 2)}</pre>
+			</>
+		)
 	)
 }

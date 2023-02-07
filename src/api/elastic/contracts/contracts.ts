@@ -21,6 +21,15 @@ interface AggregationResponse {
 export const getContractsByFunctions = async (): Promise<ContractByFunctions[]> => {
   const resp = await client.search<unknown, AggregationResponse>({
     index: 'contract-tx-*',
+    query: {
+      bool: {
+        must: {
+          exists: {
+            field: 'function'
+          }
+        }
+      }
+    },
     aggs: {
       contracts: {
         terms: { field: "to" },

@@ -8,15 +8,14 @@ interface Props {
 	contracts: ContractByFunctions[]
 }
 
-
 const options: ChartOptions<'bar'> = {
 	indexAxis: 'y',
 	color: 'white',
+	maintainAspectRatio: false,
 	scales: {
 		x: {
 			stacked: true,
 			display: false
-
 		},
 		y: {
 			stacked: true,
@@ -27,16 +26,33 @@ const options: ChartOptions<'bar'> = {
 
 
 export default function ContractBars({contracts}: Props) {
-	const labels = contracts.map(contract => contract.address);
-	const data: ChartData<'bar'> = {
-		labels,
-		datasets: contracts.map(contract => ({
-			label: contract.address,
-			data: contract.functions.map(f => f.count),
-		}))
-	}
+	const nums = contracts.map(con => con.functions.map(fn => fn.count))
+	const totals = nums.map(n => n.reduce((prev, curr) => prev+curr))
+	const total = Math.max(...totals);
+	options.scales!.x!.max = total
+
+	const colors = ['green', 'blue', 'yellow', 'red']
+
+	const configs: ChartData<'bar'>[] = contracts.map(contract => {
+		return {
+			labels: [contract.address],
+			datasets: contract.functions.map((func, index) => {
+				return {
+					label: func.name,
+					backgroundColor: colors[index%4],
+					data: [func.count],
+				}
+			})
+		}
+	})
 
 	return (
-		<Bar options={options} data={data} />
+		<>
+		{configs.map(conf => (
+			<div key={conf.labels![0] as string} className='h-24 w-full'>
+				<Bar height='100%' width={1000} key={conf.labels![0]! as string} options={options} data={conf} />
+			</div>
+		))}
+		</>
 	)
 }
