@@ -64,7 +64,7 @@ const Dashboard = async ({searchParams}: DashboardComponentProps) => {
 const renderSlot = (block: ConsensusBlock, index: number) => {
 	return (
 		<tr key={index} className="hover:bg-slate-600 transition-colors border-b-2 border-gray-900 last:border-b-transparent first:border-t-2 border-t-gray-900">
-			<td className='py-2'><Link className="text-blue-400 underline" href={`/consensus/${block.slot}`}>#{block.slot}</Link></td>
+			<td className='py-2'><Link className="text-blue-400 underline" href={`/slot/${block.slot}`}>#{block.slot}</Link></td>
 			<td>#{block.executionPayload.blockNumber}</td>
 			<td>{getAge(block.executionPayload.timestamp)}</td>
 			<td>{block.executionPayload.transactions.length}</td>

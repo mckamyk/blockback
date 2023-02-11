@@ -18,12 +18,16 @@ export const getBlock = async (slot: number): Promise<ConsensusBlock> => {
 
 export const getAndHydrateBlock = async(slot: number): Promise<ConsensusBlock> => {
 	const blk = await getBlock(slot);
-	const [exec, txns] = await Promise.all([hydrateSlots([blk]), hydrateBlocks([blk])])
+	const exec = await hydrateSlots([blk]);
 
 	return {...blk, executionPayload: {
 		...exec[0], 
-		transactions: txns
 	}}
+}
+
+export const hydrateTransactions = async (slot: ConsensusBlock) => {
+	const txns = await hydrateBlocks([slot]);
+	return txns
 }
 
 export const getLatestBlocks = async (page = 0, size = 10): Promise<ConsensusBlock[]> => {

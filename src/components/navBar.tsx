@@ -4,7 +4,6 @@ import { Dialog, Transition } from '@headlessui/react'
 import {
   Bars3Icon,
   HomeIcon,
-  UsersIcon,
   XMarkIcon,
 	NewspaperIcon
 } from '@heroicons/react/24/outline'

@@ -13,7 +13,7 @@ export default function RootLayout({
         head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
       <head />
-      <body className='bg-gray-900 text-slate-100 h-full'>
+      <body className='from-gray-900 via-gray-900 to-gray-800 text-slate-100 h-full bg-gradient-to-br bg-grad'>
         <NavBar>
           {children}
         </NavBar>
